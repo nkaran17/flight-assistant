@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FlightAssistant.Core\FlightAssistant.Core.csproj" />
+    <ProjectReference Include="..\FlightAssistant.Data\FlightAssistant.Data.csproj" />
+    <ProjectReference Include="..\FlightAssistant.Services\FlightAssistant.Services.csproj" />
+  </ItemGroup>
+
 </Project>
