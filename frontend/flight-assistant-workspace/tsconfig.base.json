@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@flight-assistant-workspace/flight-assistant-core": [
+        "libs/flight-assistant-core/src/index.ts"
+      ],
+      "@flight-assistant-workspace/flight-assistant-services": [
+        "libs/flight-assistant-services/src/index.ts"
+      ],
+      "@flight-assistant-workspace/flight-assistant-ui": [
+        "libs/flight-assistant-ui/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
