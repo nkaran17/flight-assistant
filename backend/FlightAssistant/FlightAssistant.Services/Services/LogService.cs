@@ -13,10 +13,11 @@ namespace FlightAssistant.Services.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task LogAsync(Log log)
+        public async Task<Log> Create(Log newLog)
         {
-            await _unitOfWork.LogRepo.CreateAsync(log);
-            return;
+            await _unitOfWork.LogRepo.AddAsync(newLog);
+            await _unitOfWork.CommitAsyncAppDbContext();
+            return newLog;
         }
     }
 }

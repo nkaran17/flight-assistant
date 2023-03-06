@@ -28,7 +28,7 @@ namespace FlightAssistant.API.Middlewares
             }
             catch (Exception e)
             {
-                await _logService.LogAsync(new Log
+                await _logService.Create(new Log
                 {
                     Level = LogLevelEnum.Error,
                     Message = e.Message

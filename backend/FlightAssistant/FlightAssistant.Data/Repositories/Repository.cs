@@ -1,44 +1,95 @@
-﻿using FlightAssistant.Core.Repositories;
-using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using FlightAssistant.Core.Models.Queries;
+using FlightAssistant.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace FlightAssistant.Data.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly IMongoCollection<TEntity> _collection;
+        protected readonly DbContext context;
 
-        public Repository(IMongoDatabase database, string collectionName)
+        public Repository(DbContext context)
         {
-            _collection = database.GetCollection<TEntity>(collectionName);
+            this.context = context;
         }
 
-        public async Task<List<TEntity>> GetAsync()
+        public async Task AddAsync(TEntity entity)
         {
-            return await _collection.Find(new BsonDocument()).ToListAsync();
+            await context.Set<TEntity>().AddAsync(entity);
         }
 
-        public async Task<TEntity> GetOneAsync(FilterDefinition<TEntity> filter)
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            return await _collection.Find(filter).SingleOrDefaultAsync();
+            await context.Set<TEntity>().AddRangeAsync(entities);
         }
 
-        public async Task CreateAsync(TEntity entity)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, bool include)
         {
-            await _collection.InsertOneAsync(entity);
-            return;
+            var queryable = context.Set<TEntity>().AsQueryable();
+
+            if (include)
+            {
+                foreach (var property in context.Model.FindEntityType(typeof(TEntity)).GetNavigations())
+                    queryable = queryable.Include(property.Name);
+            }
+
+            return queryable.Where(predicate);
         }
 
-        public async Task DeleteAsync(FilterDefinition<TEntity> filter)
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            await _collection.DeleteOneAsync(filter);
-            return;
+            return await context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task UpdateAsync(FilterDefinition<TEntity> filter, UpdateDefinition<TEntity> update)
+        public async Task<QueryResult<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> queryParams, Query queryBase)
         {
-            await _collection.UpdateOneAsync(filter, update);
-            return;
+            var queryable = context.Set<TEntity>().AsQueryable();
+
+            foreach (var property in context.Model.FindEntityType(typeof(TEntity)).GetNavigations())
+                queryable = queryable.Include(property.Name);
+
+            QueryResult<TEntity> queryResult = new QueryResult<TEntity>();
+
+            if (queryParams != null)
+            {
+                queryable = queryable.Where(queryParams);
+            }
+
+            queryResult.TotalItems = await queryable.CountAsync();
+            queryResult.Items = await queryable.Skip((queryBase.Page - 1) * queryBase.ItemsPerPage)
+                                                    .Take(queryBase.ItemsPerPage)
+                                                    .ToListAsync();
+
+            return queryResult;
+        }
+
+        public async ValueTask<TEntity> GetByIdAsync(int id)
+        {
+            return await context.Set<TEntity>().FindAsync(id);
+        }
+
+        public void Remove(TEntity entity)
+        {
+            context.Set<TEntity>().Remove(entity);
+        }
+
+        public void RemoveRange(IEnumerable<TEntity> entities)
+        {
+            context.Set<TEntity>().RemoveRange(entities);
+        }
+
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, bool include)
+        {
+            var queryable = context.Set<TEntity>().AsQueryable();
+
+            if (include)
+            {
+                foreach (var property in context.Model.FindEntityType(typeof(TEntity)).GetNavigations())
+                    queryable = queryable.Include(property.Name);
+            }
+
+            return await queryable.SingleOrDefaultAsync(predicate);
         }
     }
 }

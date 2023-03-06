@@ -1,14 +1,10 @@
 ﻿using FlightAssistant.Core.Enums;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace FlightAssistant.Core.Models
 {
     public class Log
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public int Id { get; set; }
 
         public LogLevelEnum Level { get; set; }
 

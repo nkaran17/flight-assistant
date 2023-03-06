@@ -1,16 +1,18 @@
 using FlightAssistant.API.Middlewares;
 using FlightAssistant.Core.Repositories;
 using FlightAssistant.Core.Services;
-using FlightAssistant.Core.Settings;
+using FlightAssistant.Data;
 using FlightAssistant.Data.Repositories;
 using FlightAssistant.Services.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
-builder.Services.AddSingleton<IMongoDBConnection, MongoDBConnection>();
+builder.Services.AddDbContext<AppDbContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("Flight_Assistant_DB")));
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ILogService, LogService>();
 

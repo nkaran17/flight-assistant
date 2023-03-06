@@ -4,6 +4,6 @@ namespace FlightAssistant.Core.Services
 {
     public interface ILogService
     {
-        Task LogAsync(Log log);
+        Task<Log> Create(Log newLog);
     }
 }
