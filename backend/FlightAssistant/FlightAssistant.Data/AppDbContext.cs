@@ -17,6 +17,7 @@ namespace FlightAssistant.Data
             modelBuilder.Entity<Log>().HasKey(l => l.Id);
 
             modelBuilder.Entity<Airport>().HasKey(a => a.Id);
+            modelBuilder.Entity<Airport>().HasIndex(a => a.Iata).IsUnique();
         }
     }
 }

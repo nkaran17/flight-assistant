@@ -5,6 +5,6 @@ namespace FlightAssistant.Core.Services
     public interface IAirportService
     {
         Task<Airport> Create(Airport newAirport);
-        Task<List<Airport>> FetchAirports();
+        Task FetchAirports();
     }
 }
