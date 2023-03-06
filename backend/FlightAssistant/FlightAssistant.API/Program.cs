@@ -15,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ILogService, LogService>();
+builder.Services.AddScoped<IAirportService, AirportService>();
 
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
