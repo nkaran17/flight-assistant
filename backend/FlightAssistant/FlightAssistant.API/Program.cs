@@ -18,12 +18,14 @@ builder.Services.AddSingleton<ICacheService, CacheService>();
 builder.Services.AddSingleton<IAmadeusConfigService, AmadeusConfigService>();
 
 builder.Services.AddTransient<IAirportRepository, AirportRepository>();
+builder.Services.AddTransient<ICurrencyRepository, CurrencyRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("Flight_Assistant_DB")));
 
 builder.Services.AddTransient<IAirportService, AirportService>();
+builder.Services.AddTransient<ICurrencyService, CurrencyService>();
 builder.Services.AddTransient<IAmadeusApiService, AmadeusApiService>();
 
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();

@@ -10,11 +10,15 @@ namespace FlightAssistant.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Airport> Airports { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Airport>().HasKey(a => a.Id);
             modelBuilder.Entity<Airport>().HasIndex(a => a.Iata).IsUnique();
+
+            modelBuilder.Entity<Currency>().HasKey(c => c.Id);
+            modelBuilder.Entity<Currency>().HasIndex(c => c.AlphabeticCode).IsUnique();
         }
     }
 }
