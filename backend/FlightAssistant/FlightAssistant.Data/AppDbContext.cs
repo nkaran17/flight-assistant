@@ -19,6 +19,28 @@ namespace FlightAssistant.Data
 
             modelBuilder.Entity<Currency>().HasKey(c => c.Id);
             modelBuilder.Entity<Currency>().HasIndex(c => c.AlphabeticCode).IsUnique();
+
+            modelBuilder.Entity<Flight>().HasKey(c => c.Id);
+            modelBuilder.Entity<Flight>()
+            .HasOne(f => f.DepartureAirport)
+            .WithMany()
+            .HasForeignKey(f => f.DepartureAirportId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Flight>()
+            .HasOne(f => f.ArrivalAirport)
+            .WithMany()
+            .HasForeignKey(f => f.ArrivalAirportId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Flight>()
+            .HasOne(f => f.Currency)
+            .WithMany()
+            .HasForeignKey(f => f.CurrencyId)
+            .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Flight>()
+                .Property(t => t.DepartureDate).IsRequired();
+
         }
     }
 }
