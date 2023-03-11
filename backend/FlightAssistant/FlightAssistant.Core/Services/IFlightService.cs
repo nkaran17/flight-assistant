@@ -8,5 +8,6 @@ namespace FlightAssistant.Core.Services
     {
         Task<QueryResult<Flight>> GetFlights(AmadeusFlightsRequest query);
         Task<Flight> Create(Flight newFlight);
+        Task<QueryResult<Flight>> AddAmadeusFliights(AmadeusFlightsRequest query, List<FlightOffer> flightOffers);
     }
 }

@@ -16,7 +16,7 @@ namespace FlightAssistant.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] AmadeusFlightsRequest request)
+        public async Task<IActionResult> GetAll()
         {
             await _airportService.FetchAirports();
             return Ok();
