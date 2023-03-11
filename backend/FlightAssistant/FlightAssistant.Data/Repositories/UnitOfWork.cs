@@ -7,15 +7,18 @@ namespace FlightAssistant.Data.Repositories
         private readonly AppDbContext _context;
         public IAirportRepository Airports { get; }
         public ICurrencyRepository Currencies { get; }
+        public IFlightRepository Flights { get; }
 
         public UnitOfWork(AppDbContext appDbContext,
             IAirportRepository airportRepository,
-            ICurrencyRepository currencyRepository)
+            ICurrencyRepository currencyRepository,
+            IFlightRepository flightRepository)
         {
-            this._context = appDbContext;
+            _context = appDbContext;
 
-            this.Airports = airportRepository;
-            this.Currencies = currencyRepository;
+            Airports = airportRepository;
+            Currencies = currencyRepository;
+            Flights = flightRepository;
         }
 
         public async Task<int> Complete()

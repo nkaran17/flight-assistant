@@ -4,6 +4,7 @@
     {
         IAirportRepository Airports { get; }
         ICurrencyRepository Currencies { get; }
+        IFlightRepository Flights { get; }
         Task<int> Complete();
     }
 }
