@@ -9,5 +9,6 @@
         public string AccessTokenRequestApiSecretParamKey { get; set; } = null!;
         public string AccessTokenRequestApiSecretParamValue { get; set; } = null!;
         public string AccessTokenRequestURL { get; set; } = null!;
+        public string APIBaseUrl { get; set; } = null!;
     }
 }

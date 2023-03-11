@@ -24,6 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("Flight_Assistant_DB")));
 
 builder.Services.AddTransient<IAirportService, AirportService>();
+builder.Services.AddTransient<IAmadeusApiService, AmadeusApiService>();
 
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 
