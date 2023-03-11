@@ -10,12 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddTransient<IAirportRepository, AirportRepository>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddDbContext<AppDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("Flight_Assistant_DB")));
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<ILogService, LogService>();
-builder.Services.AddScoped<IAirportService, AirportService>();
+builder.Services.AddTransient<IAirportService, AirportService>();
 
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 

@@ -2,7 +2,7 @@
 
 namespace FlightAssistant.Core.Repositories
 {
-    public interface IAirportRepository : IRepository<Airport>
+    public interface IAirportRepository : IGenericRepository<Airport>
     {
     }
 }

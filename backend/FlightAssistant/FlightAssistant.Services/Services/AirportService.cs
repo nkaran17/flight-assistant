@@ -1,5 +1,4 @@
-﻿using FlightAssistant.Core.Enums;
-using FlightAssistant.Core.Models;
+﻿using FlightAssistant.Core.Models;
 using FlightAssistant.Core.Repositories;
 using FlightAssistant.Core.Services;
 using HtmlAgilityPack;
@@ -9,35 +8,30 @@ namespace FlightAssistant.Services.Services
     public class AirportService : IAirportService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogService _logService;
 
-        public AirportService(IUnitOfWork unitOfWork, ILogService logService)
+        public AirportService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _logService = logService;
         }
 
         public async Task<Airport> Create(Airport newAirport)
         {
-            await _unitOfWork.AirportRepo.AddAsync(newAirport);
-            await _unitOfWork.CommitAsyncAppDbContext();
+            await _unitOfWork.Airports.AddAsync(newAirport);
+            await _unitOfWork.Complete();
             return newAirport;
         }
 
         public async Task FetchAirports()
         {
-            await _logService.Create(new Log
-            {
-                Level = LogLevelEnum.Trace,
-                Message = "Fetching airports started."
-            });
-
             var url = "https://en.wikipedia.org/wiki/List_of_airports_by_IATA_airport_code:_A";
             var httpClient = new HttpClient();
             var html = await httpClient.GetStringAsync(url);
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(html);
             var tables = htmlDocument.DocumentNode.SelectNodes("//table");
+
+            List<Airport> airports = new List<Airport>();
+
             foreach (var table in tables)
             {
                 var rows = table.SelectNodes(".//tr");
@@ -53,16 +47,16 @@ namespace FlightAssistant.Services.Services
                     var name = cells[2].InnerText.Trim();
                     var location = cells[3].InnerText.Trim();
                     var airport = new Airport { Iata = iata, Icao = icao, Name = name, Location = location };
-                    await _unitOfWork.AirportRepo.AddAsync(airport);
+                    airports.Add(airport);
                 }
-                await _unitOfWork.CommitAsyncAppDbContext();
             }
 
-            await _logService.Create(new Log
+            if (airports != null && airports.Count > 0)
             {
-                Level = LogLevelEnum.Trace,
-                Message = "Fetching airports finished."
-            });
+                await _unitOfWork.Airports.AddRangeAsync(airports);
+                await _unitOfWork.Complete();
+            }
+
             return;
         }
     }

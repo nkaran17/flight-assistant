@@ -1,7 +1,4 @@
-﻿using FlightAssistant.Core.Enums;
-using FlightAssistant.Core.Models;
-using FlightAssistant.Core.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
 
@@ -12,12 +9,8 @@ namespace FlightAssistant.API.Middlewares
         private readonly Type[] BAD_REQUEST_EXCEPTIONS = { };
         private readonly Type[] NOT_FOUND_EXCEPTIONS = { };
 
-        private readonly ILogService _logService;
-
-
-        public GlobalExceptionHandlingMiddleware(ILogService logService)
+        public GlobalExceptionHandlingMiddleware()
         {
-            _logService = logService;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
@@ -28,12 +21,6 @@ namespace FlightAssistant.API.Middlewares
             }
             catch (Exception e)
             {
-                await _logService.Create(new Log
-                {
-                    Level = LogLevelEnum.Error,
-                    Message = e.Message
-                });
-
                 int status;
                 string type;
                 string title;

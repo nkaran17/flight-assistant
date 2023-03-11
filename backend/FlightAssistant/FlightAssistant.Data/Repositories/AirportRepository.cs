@@ -4,10 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlightAssistant.Data.Repositories
 {
-    public class AirportRepository : Repository<Airport>, IAirportRepository
+    public class AirportRepository : GenericRepository<Airport>, IAirportRepository
     {
-        public AirportRepository(DbContext context) : base(context) { }
-
-        private AppDbContext _appDbContext { get { return context as AppDbContext; } }
+        public AirportRepository(AppDbContext context) : base(context) { }
     }
 }

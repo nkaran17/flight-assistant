@@ -1,9 +1,8 @@
 ﻿namespace FlightAssistant.Core.Repositories
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        ILogRepository LogRepo { get; }
-        IAirportRepository AirportRepo { get; }
-        Task<int> CommitAsyncAppDbContext();
+        IAirportRepository Airports { get; }
+        Task<int> Complete();
     }
 }
