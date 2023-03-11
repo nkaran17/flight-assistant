@@ -27,8 +27,8 @@ builder.Services.AddDbContext<AppDbContext>(
 
 builder.Services.AddTransient<IAirportService, AirportService>();
 builder.Services.AddTransient<ICurrencyService, CurrencyService>();
+builder.Services.AddScoped<IAmadeusApiService, AmadeusApiService>();
 builder.Services.AddTransient<IFlightService, FlightService>();
-builder.Services.AddTransient<IAmadeusApiService, AmadeusApiService>();
 
 builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 

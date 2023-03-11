@@ -9,10 +9,12 @@ namespace FlightAssistant.Services.Services
     public class FlightService : IFlightService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAmadeusApiService _amadeusApiService;
 
-        public FlightService(IUnitOfWork unitOfWork)
+        public FlightService(IUnitOfWork unitOfWork, IAmadeusApiService amadeusApiService)
         {
             _unitOfWork = unitOfWork;
+            _amadeusApiService = amadeusApiService;
         }
 
         public async Task<QueryResult<Flight>> GetFlights(AmadeusFlightsRequest query)
@@ -22,6 +24,8 @@ namespace FlightAssistant.Services.Services
             {
                 return flightsFromDb;
             }
+
+            var flightsFromAmadeus = await _amadeusApiService.GetFlights(query);
             return null;
         }
 
