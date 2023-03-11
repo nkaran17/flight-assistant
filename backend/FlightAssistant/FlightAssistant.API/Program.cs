@@ -1,6 +1,7 @@
 using FlightAssistant.API.Middlewares;
 using FlightAssistant.Core.Repositories;
 using FlightAssistant.Core.Services;
+using FlightAssistant.Core.Settings;
 using FlightAssistant.Data;
 using FlightAssistant.Data.Repositories;
 using FlightAssistant.Services.Services;
@@ -9,6 +10,12 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.Configure<AmadeusSettings>(builder.Configuration.GetSection("Amadeus"));
+builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection("Cache"));
+
+builder.Services.AddSingleton<ICacheService, CacheService>();
+builder.Services.AddSingleton<IAmadeusConfigService, AmadeusConfigService>();
 
 builder.Services.AddTransient<IAirportRepository, AirportRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
