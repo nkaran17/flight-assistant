@@ -10,6 +10,7 @@ namespace FlightAssistant.Core.Services
     public interface ICurrencyService
     {
         Task<Currency> Create(Currency newCurrency);
+        Task<string> GetCurrencyAlphabeticCodeById(int currencyId);
         Task FetchCurrencies();
     }
 }

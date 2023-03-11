@@ -7,7 +7,7 @@ namespace FlightAssistant.Data.Repositories
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly DbContext context;
-        private readonly DbSet<T> _entities;
+        protected readonly DbSet<T> _entities;
 
         public GenericRepository(DbContext context)
         {

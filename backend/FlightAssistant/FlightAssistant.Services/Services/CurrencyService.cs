@@ -20,6 +20,13 @@ namespace FlightAssistant.Services.Services
             return newCurrency;
         }
 
+        public async Task<string> GetCurrencyAlphabeticCodeById(int currencyId)
+        {
+            var currency = await _unitOfWork.Currencies.GetByIdAsync(currencyId);
+            if (currency != null) return currency.AlphabeticCode;
+            return null;
+        }
+
         public async Task FetchCurrencies()
         {
             var currencies = await _unitOfWork.Currencies.LoadCurrenciesFromFile();

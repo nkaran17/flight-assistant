@@ -1,4 +1,5 @@
 ﻿using FlightAssistant.Core.DTO;
+using FlightAssistant.Core.Helpers;
 using FlightAssistant.Core.Services;
 using FlightAssistant.Core.Settings;
 using Microsoft.Extensions.Options;
@@ -13,11 +14,15 @@ namespace FlightAssistant.Services.Services
     {
         private readonly IAmadeusConfigService _amadeusConfigService;
         private readonly AmadeusSettings _amadeusSettings;
+        private readonly IAirportService _airportService;
+        private readonly ICurrencyService _currencyService;
 
-        public AmadeusApiService(IAmadeusConfigService amadeusConfigService, IOptions<AmadeusSettings> amadeusSettings)
+        public AmadeusApiService(IAmadeusConfigService amadeusConfigService, IOptions<AmadeusSettings> amadeusSettings, IAirportService airportService, ICurrencyService currencyService)
         {
             _amadeusConfigService = amadeusConfigService;
             _amadeusSettings = amadeusSettings.Value;
+            _airportService = airportService;
+            _currencyService = currencyService;
         }
 
         public async Task<List<FlightOffer>> GetFlights(AmadeusFlightsRequest request)
@@ -27,10 +32,10 @@ namespace FlightAssistant.Services.Services
 
             var url = $"{_amadeusSettings.APIBaseUrl}/shopping/flight-offers";
 
-            var queryString = FillGetFlightsQueryParams(request);
+            var queryString = await FillGetFlightsQueryParams(request);
             if (queryString != null)
             {
-                url += "?" + queryString;   
+                url += "?" + queryString;
             }
 
             var response = await client.GetAsync(url);
@@ -38,50 +43,59 @@ namespace FlightAssistant.Services.Services
             var responseContent = await response.Content.ReadAsStringAsync();
             var responseData = JsonConvert.DeserializeObject<AmadeusFlightsResponse>(responseContent);
 
-            if(responseData!= null && responseData.Data != null)
+            if (responseData != null && responseData.Data != null)
             {
                 return responseData.Data;
-            } else
+            }
+            else
             {
                 return null;
             }
         }
 
-        private string FillGetFlightsQueryParams(AmadeusFlightsRequest request)
+        private async Task<string> FillGetFlightsQueryParams(AmadeusFlightsRequest request)
         {
             NameValueCollection queryParams = new NameValueCollection();
 
-            if (request.OriginLocationCode != null)
+            if (request.DepartureAirportId > 0)
             {
-                queryParams.Add("originLocationCode", request.OriginLocationCode);
+                var departureAirportIata = await _airportService.GetAirportIataById(request.DepartureAirportId);
+                if (departureAirportIata != null)
+                {
+                    queryParams.Add("originLocationCode", departureAirportIata);
+                }
             }
-            if (request.DestinationLocationCode != null)
+            if (request.ArrivalAirportId > 0)
             {
-                queryParams.Add("destinationLocationCode", request.DestinationLocationCode);
+                var arrivalAirportIata = await _airportService.GetAirportIataById(request.ArrivalAirportId);
+                if (arrivalAirportIata != null)
+                {
+                    queryParams.Add("destinationLocationCode", arrivalAirportIata);
+                }
             }
-            if (request.DepartureDate != null)
+
+            var departureDate = DateTimeHelper.DateOnly(request.DepartureDate);
+            if (departureDate != null)
             {
-                queryParams.Add("departureDate", request.DepartureDate.ToString("yyyy-MM-dd"));
+                queryParams.Add("departureDate", departureDate);
             }
-            if (request.ReturnDate != null)
+
+            var returnDate = DateTimeHelper.DateOnly(request.ReturnDate);
+            if (returnDate != null)
             {
-                queryParams.Add("returnDate", request.ReturnDate.Value.ToString("yyyy-MM-dd"));
+                queryParams.Add("returnDate", returnDate);
             }
-            if (request.Adults > 0)
+            if (request.NumberOfPassangers > 0)
             {
-                queryParams.Add("adults", request.Adults.ToString());
+                queryParams.Add("adults", request.NumberOfPassangers.ToString());
             }
-            if (request.Children > 0)
+            if (request.CurrencyId > 0)
             {
-                queryParams.Add("children", request.Children.ToString());
-            }
-            if (request.Infants > 0)
-            {
-                queryParams.Add("infants", request.Infants.ToString());
-            }
-            if (request.CurrencyCode != null)
-            {
-                queryParams.Add("currencyCode", request.CurrencyCode);
+                var currencyAlphabeticCode = await _currencyService.GetCurrencyAlphabeticCodeById(request.CurrencyId);
+                if (currencyAlphabeticCode != null)
+                {
+                    queryParams.Add("currencyCode", currencyAlphabeticCode);
+                }
             }
 
             string queryString = null;

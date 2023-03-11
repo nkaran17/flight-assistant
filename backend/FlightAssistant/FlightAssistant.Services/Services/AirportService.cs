@@ -21,6 +21,13 @@ namespace FlightAssistant.Services.Services
             return newAirport;
         }
 
+        public async Task<string> GetAirportIataById(int airportId)
+        {
+            var airport = await _unitOfWork.Airports.GetByIdAsync(airportId);
+            if (airport != null) return airport.Iata;
+            return null;
+        }
+
         public async Task FetchAirports()
         {
             var url = "https://en.wikipedia.org/wiki/List_of_airports_by_IATA_airport_code:_A";
