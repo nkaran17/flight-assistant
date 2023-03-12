@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FlightsComponent } from './flights.component';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [FlightsComponent],
@@ -20,6 +21,7 @@ import { FlightsComponent } from './flights.component';
         ],
       },
     ]),
+    CardModule,
   ],
 })
 export class FlightsModule {}
