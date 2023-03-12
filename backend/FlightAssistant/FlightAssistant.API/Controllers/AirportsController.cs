@@ -1,5 +1,4 @@
-﻿using FlightAssistant.Core.DTO;
-using FlightAssistant.Core.Services;
+﻿using FlightAssistant.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlightAssistant.API.Controllers
@@ -18,7 +17,14 @@ namespace FlightAssistant.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            await _airportService.FetchAirports();
+            var airports = await _airportService.GetAll();
+            return Ok(airports);
+        }
+
+        [HttpGet("load")]
+        public async Task<IActionResult> LoadAll()
+        {
+            await _airportService.LoadAirports();
             return Ok();
         }
     }

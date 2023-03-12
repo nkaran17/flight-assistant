@@ -1,4 +1,5 @@
-﻿using FlightAssistant.Core.Models;
+﻿using FlightAssistant.Core.DTO;
+using FlightAssistant.Core.Models;
 using FlightAssistant.Core.Repositories;
 using FlightAssistant.Core.Services;
 
@@ -40,12 +41,12 @@ namespace FlightAssistant.Services.Services
             return;
         }
 
-        public async Task<List<Currency>> GetAll() 
+        public async Task<List<CurrencyResponse>> GetAll()
         {
             var currencies = await _unitOfWork.Currencies.GetAllAsync();
-            if(currencies != null)
+            if (currencies != null)
             {
-                return currencies.ToList();
+                return currencies.Select(c => new CurrencyResponse(c.Id, c.AlphabeticCode, c.Name)).ToList();
             }
             return null;
         }

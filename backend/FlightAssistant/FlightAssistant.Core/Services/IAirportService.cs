@@ -1,4 +1,5 @@
-﻿using FlightAssistant.Core.Models;
+﻿using FlightAssistant.Core.DTO;
+using FlightAssistant.Core.Models;
 
 namespace FlightAssistant.Core.Services
 {
@@ -6,6 +7,7 @@ namespace FlightAssistant.Core.Services
     {
         Task<Airport> Create(Airport newAirport);
         Task<string> GetAirportIataById(int airportId);
-        Task FetchAirports();
+        Task LoadAirports();
+        Task<List<AirportResponse>> GetAll();
     }
 }

@@ -1,9 +1,5 @@
-﻿using FlightAssistant.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FlightAssistant.Core.DTO;
+using FlightAssistant.Core.Models;
 
 namespace FlightAssistant.Core.Services
 {
@@ -12,6 +8,6 @@ namespace FlightAssistant.Core.Services
         Task<Currency> Create(Currency newCurrency);
         Task<string> GetCurrencyAlphabeticCodeById(int currencyId);
         Task LoadCurrencies();
-        Task<List<Currency>> GetAll();
+        Task<List<CurrencyResponse>> GetAll();
     }
 }

@@ -1,4 +1,5 @@
-﻿using FlightAssistant.Core.Models;
+﻿using FlightAssistant.Core.DTO;
+using FlightAssistant.Core.Models;
 using FlightAssistant.Core.Repositories;
 using FlightAssistant.Core.Services;
 using HtmlAgilityPack;
@@ -28,7 +29,7 @@ namespace FlightAssistant.Services.Services
             return null;
         }
 
-        public async Task FetchAirports()
+        public async Task LoadAirports()
         {
             var url = "https://en.wikipedia.org/wiki/List_of_airports_by_IATA_airport_code:_A";
             var httpClient = new HttpClient();
@@ -65,6 +66,16 @@ namespace FlightAssistant.Services.Services
             }
 
             return;
+        }
+
+        public async Task<List<AirportResponse>> GetAll()
+        {
+            var airports = await _unitOfWork.Airports.GetAllAsync();
+            if (airports != null)
+            {
+                return airports.Select(a => new AirportResponse(a.Id, a.Iata, a.Icao, a.Name, a.Location)).ToList();
+            }
+            return null;
         }
     }
 }
