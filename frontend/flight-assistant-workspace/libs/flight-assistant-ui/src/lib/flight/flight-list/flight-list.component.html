@@ -2,7 +2,18 @@
   (querySubmit)="onQuerySubmit($event)"
 ></flight-assistant-workspace-flight-query-form>
 <div class="my-3">
-  <p-table [value]="flightList$ | async" [loading]="isLoading$ | async" styleClass="p-datatable-sm">
+  <p-table
+    [value]="flightList$ | async"
+    [loading]="isLoading$ | async"
+    styleClass="p-datatable-sm"
+    [lazy]="true"
+    [paginator]="true"
+    [rows]="flightQuery?.itemsPerPage"
+    [first]="(flightQuery?.page - 1) * flightQuery?.itemsPerPage"
+    [totalRecords]="flightListTotalItems$ | async"
+    [loading]="isLoading$ | async"
+    (onPage)="paginatorChange($event)"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th>Departure Airport</th>
