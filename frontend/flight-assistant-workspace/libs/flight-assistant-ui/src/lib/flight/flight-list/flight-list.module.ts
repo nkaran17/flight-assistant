@@ -5,11 +5,7 @@ import { FlightListComponent } from './flight-list.component';
 import { FlightQueryFormModule } from '../flight-query-form';
 import { FlightListUiService } from './flight-list-ui.service';
 import { TableModule } from 'primeng/table';
-import {
-  CustomAirportPipeModule,
-  CustomCurrencyPipeModule,
-  CustomDatePipeModule,
-} from '@flight-assistant-workspace/flight-assistant-ui/pipes';
+import { CustomAirportPipeModule, CustomCurrencyPipeModule, CustomDatePipeModule } from '../../pipes';
 
 @NgModule({
   declarations: [FlightListComponent],
