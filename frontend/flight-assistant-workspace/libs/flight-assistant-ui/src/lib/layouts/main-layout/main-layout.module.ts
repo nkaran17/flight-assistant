@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { MainLayoutComponent } from './main-layout.component';
 
@@ -23,6 +24,7 @@ import { MainLayoutComponent } from './main-layout.component';
         ],
       },
     ]),
+    ProgressSpinnerModule,
   ],
 })
 export class MainLayoutModule {}

@@ -15,7 +15,6 @@ export class MainLayoutComponent extends ComponentBase implements OnInit {
 
   public isCodebookLoadInProgress$ = this.codebookService.isCodebookLoadInProgress$;
   public isCodebookLoadFinishedSuccessfully$ = this.codebookService.isCodebookLoadFinishedSuccessfully$;
-  public currencies$ = this.codebookService.currencies$;
 
   ngOnInit(): void {
     this.codebookService.loadCodebooks();

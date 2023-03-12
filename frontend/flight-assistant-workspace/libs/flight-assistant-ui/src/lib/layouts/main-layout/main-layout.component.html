@@ -1,4 +1,14 @@
-<router-outlet></router-outlet>
-{{ isCodebookLoadInProgress$ | async }}
-{{ isCodebookLoadFinishedSuccessfully$ | async }}
-{{ currencies$ | async | json }}
+<div
+  class="flex justify-content-center align-items-center w-full h-screen"
+  *ngIf="isCodebookLoadInProgress$ | async; else loadFinished"
+>
+  <p-progressSpinner></p-progressSpinner>
+</div>
+<ng-template #loadFinished>
+  <div *ngIf="isCodebookLoadFinishedSuccessfully$ | async; else loadFinishedWithError">
+    <router-outlet></router-outlet>
+  </div>
+  <ng-template #loadFinishedWithError>
+    <h1>ERROR</h1>
+  </ng-template>
+</ng-template>
