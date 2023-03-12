@@ -44,11 +44,16 @@ namespace FlightAssistant.Services.Services
         public async Task<List<CurrencyResponse>> GetAll()
         {
             var currencies = await _unitOfWork.Currencies.GetAllAsync();
-            if (currencies != null)
+            if (currencies != null && currencies.Count() > 0)
             {
                 return currencies.Select(c => new CurrencyResponse(c.Id, c.AlphabeticCode, c.Name)).ToList();
             }
-            return null;
+            else
+            {
+                await LoadCurrencies();
+                var loadedCurrencies = await _unitOfWork.Currencies.GetAllAsync();
+                return loadedCurrencies.Select(c => new CurrencyResponse(c.Id, c.AlphabeticCode, c.Name)).ToList();
+            }
         }
     }
 }

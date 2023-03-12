@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightAssistant.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230311215637_FlightChangesV3")]
-    partial class FlightChangesV3
+    [Migration("20230312174442_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,10 +92,10 @@ namespace FlightAssistant.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ArrivalDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CurrencyId")
-                        .IsRequired()
+                    b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
                     b.Property<int>("DepartureAirportId")

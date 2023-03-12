@@ -20,12 +20,5 @@ namespace FlightAssistant.API.Controllers
             var airports = await _airportService.GetAll();
             return Ok(airports);
         }
-
-        [HttpGet("load")]
-        public async Task<IActionResult> LoadAll()
-        {
-            await _airportService.LoadAirports();
-            return Ok();
-        }
     }
 }

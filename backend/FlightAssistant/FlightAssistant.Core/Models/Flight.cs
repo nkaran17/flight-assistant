@@ -10,7 +10,7 @@
         public DateTime? ReturnDate { get; set; }
         public int NumberOfPassangers { get; set; }
         public int NumberOfLayovers { get; set; }
-        public int? CurrencyId { get; set; }
+        public int CurrencyId { get; set; }
         public string GrandTotalPrice { get; set; }
         public Airport DepartureAirport { get; set; }
         public Airport ArrivalAirport { get; set; }

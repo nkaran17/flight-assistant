@@ -37,10 +37,12 @@ namespace FlightAssistant.Data
             .HasOne(f => f.Currency)
             .WithMany()
             .HasForeignKey(f => f.CurrencyId)
-            .IsRequired(false)
+            .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Flight>()
-                .Property(t => t.DepartureDate).IsRequired();
+                .Property(f => f.DepartureDate).IsRequired();
+            modelBuilder.Entity<Flight>()
+                .Property(f => f.ArrivalDate).IsRequired();
 
         }
     }

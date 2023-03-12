@@ -1,5 +1,4 @@
-﻿using FlightAssistant.Core.DTO;
-using FlightAssistant.Core.Services;
+﻿using FlightAssistant.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlightAssistant.API.Controllers
@@ -20,13 +19,6 @@ namespace FlightAssistant.API.Controllers
         {
             var currencies = await _currencyService.GetAll();
             return Ok(currencies);
-        }
-
-        [HttpGet("load")]
-        public async Task<IActionResult> LoadAll()
-        {
-            await _currencyService.LoadCurrencies();
-            return Ok();
         }
     }
 }

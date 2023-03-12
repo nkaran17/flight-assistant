@@ -53,7 +53,7 @@ namespace FlightAssistant.Services.Services
                         DepartureDate = GetDepartureTimeFromFlightOffer(flightOffer, query.DepartureDate),
                         ArrivalDate = GetArrivalTimeFromFlightOffer(flightOffer),
                         ReturnDate = query.ReturnDate,
-                        CurrencyId = query.CurrencyId > 0 ? query.CurrencyId : null,
+                        CurrencyId = query.CurrencyId,
                         NumberOfLayovers = GetNumberOfLayoversFromFlightOffer(flightOffer),
                         NumberOfPassangers = query.NumberOfPassangers,
                         GrandTotalPrice = GetGrandTotalPriceFromFlightOffer(flightOffer)
@@ -88,17 +88,9 @@ namespace FlightAssistant.Services.Services
             return queryDateTime;
         }
 
-        private DateTime? GetArrivalTimeFromFlightOffer(FlightOffer flightOffer)
+        private DateTime GetArrivalTimeFromFlightOffer(FlightOffer flightOffer)
         {
-            if (flightOffer != null &&
-                flightOffer.Itineraries != null &&
-                flightOffer.Itineraries.Length > 0 &&
-                flightOffer.Itineraries[0].Segments != null &&
-                flightOffer.Itineraries[0].Segments.Length > 0)
-            {
-                return flightOffer.Itineraries[0].Segments[flightOffer.Itineraries[0].Segments.Length - 1].Arrival.At;
-            }
-            return null;
+            return flightOffer.Itineraries[0].Segments[flightOffer.Itineraries[0].Segments.Length - 1].Arrival.At;
         }
 
         private int GetNumberOfLayoversFromFlightOffer(FlightOffer flightOffer)

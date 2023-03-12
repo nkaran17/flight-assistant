@@ -30,9 +30,17 @@ namespace FlightAssistant.Data.Repositories
                 {
                     queryable = queryable.Where(x => x.DepartureDate.Date == query.DepartureDate.Date);
                 }
+                if (query.ReturnDate != null)
+                {
+                    queryable = queryable.Where(x => x.ReturnDate.Value.Date == query.ReturnDate.Value.Date);
+                }
                 if (query.CurrencyId > 0)
                 {
                     queryable = queryable.Where(x => x.CurrencyId == query.CurrencyId);
+                }
+                if (query.NumberOfPassangers > 0)
+                {
+                    queryable = queryable.Where(x => x.NumberOfPassangers == query.NumberOfPassangers);
                 }
             }
 

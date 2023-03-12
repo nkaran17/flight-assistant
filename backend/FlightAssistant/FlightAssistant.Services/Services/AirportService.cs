@@ -71,11 +71,15 @@ namespace FlightAssistant.Services.Services
         public async Task<List<AirportResponse>> GetAll()
         {
             var airports = await _unitOfWork.Airports.GetAllAsync();
-            if (airports != null)
+            if (airports != null && airports.Count() > 0)
             {
                 return airports.Select(a => new AirportResponse(a.Id, a.Iata, a.Icao, a.Name, a.Location)).ToList();
+            } else
+            {
+                await LoadAirports();
+                var loadedAirports = await _unitOfWork.Airports.GetAllAsync();
+                return loadedAirports.Select(a => new AirportResponse(a.Id, a.Iata, a.Icao, a.Name, a.Location)).ToList();
             }
-            return null;
         }
     }
 }

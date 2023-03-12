@@ -89,9 +89,10 @@ namespace FlightAssistant.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ArrivalDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CurrencyId")
+                    b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
                     b.Property<int>("DepartureAirportId")
@@ -135,7 +136,8 @@ namespace FlightAssistant.Data.Migrations
                     b.HasOne("FlightAssistant.Core.Models.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("FlightAssistant.Core.Models.Airport", "DepartureAirport")
                         .WithMany()
