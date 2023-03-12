@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ServiceBase } from '@flight-assistant-workspace/flight-assistant-core/foundation';
-import { Currency } from '@flight-assistant-workspace/flight-assistant-core/models';
+import { Airport, Currency } from '@flight-assistant-workspace/flight-assistant-core/models';
 import { BehaviorSubject, combineLatest, lastValueFrom } from 'rxjs';
+import { AirportService } from '../api-services/airport.service';
 import { CurrencyService } from '../api-services/currency.service';
 
 @Injectable({
@@ -11,12 +12,14 @@ export class CoodebookService extends ServiceBase {
   private isCodebookLoadInProgressSubject = new BehaviorSubject<boolean>(false);
   private isCodebookLoadFinishedSuccessfullySubject = new BehaviorSubject<boolean>(null);
   private currenciesSubject = new BehaviorSubject<Currency[]>([]);
+  private airportsSubject = new BehaviorSubject<Airport[]>([]);
 
   public readonly isCodebookLoadInProgress$ = this.isCodebookLoadInProgressSubject.asObservable();
   public readonly isCodebookLoadFinishedSuccessfully$ = this.isCodebookLoadFinishedSuccessfullySubject.asObservable();
   public readonly currencies$ = this.currenciesSubject.asObservable();
+  public readonly airports$ = this.airportsSubject.asObservable();
 
-  constructor(private readonly currencyService: CurrencyService) {
+  constructor(private readonly currencyService: CurrencyService, private readonly airportService: AirportService) {
     super('CoodebookService');
   }
 
@@ -24,9 +27,12 @@ export class CoodebookService extends ServiceBase {
     try {
       this.isCodebookLoadInProgressSubject.next(true);
 
-      const [currencies] = await lastValueFrom(combineLatest([this.currencyService.getCurrencies()]));
+      const [currencies, airports] = await lastValueFrom(
+        combineLatest([this.currencyService.getCurrencies(), this.airportService.getAirports()])
+      );
 
       this.currenciesSubject.next(currencies);
+      this.airportsSubject.next(airports);
 
       this.isCodebookLoadFinishedSuccessfullySubject.next(true);
     } catch (err) {
