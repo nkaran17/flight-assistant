@@ -11,6 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        corsBuilder =>
+        {
+            corsBuilder
+            .WithOrigins(builder.Configuration.GetSection("CorsOptions:AllowOrigins").Get<string[]>())
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
+
 builder.Services.Configure<AmadeusSettings>(builder.Configuration.GetSection("Amadeus"));
 builder.Services.Configure<CacheSettings>(builder.Configuration.GetSection("Cache"));
 
@@ -47,6 +59,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

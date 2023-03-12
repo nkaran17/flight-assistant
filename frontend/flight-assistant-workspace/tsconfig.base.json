@@ -16,7 +16,22 @@
     "baseUrl": ".",
     "paths": {
       "@flight-assistant-workspace/flight-assistant-core": ["libs/flight-assistant-core/src/index.ts"],
+      "@flight-assistant-workspace/flight-assistant-core/models": [
+        "libs/flight-assistant-core/src/lib/models/index.ts"
+      ],
+      "@flight-assistant-workspace/flight-assistant-core/config": [
+        "libs/flight-assistant-core/src/lib/config/index.ts"
+      ],
+      "@flight-assistant-workspace/flight-assistant-core/foundation": [
+        "libs/flight-assistant-core/src/lib/foundation/index.ts"
+      ],
       "@flight-assistant-workspace/flight-assistant-services": ["libs/flight-assistant-services/src/index.ts"],
+      "@flight-assistant-workspace/flight-assistant-services/api/services": [
+        "libs/flight-assistant-services/src/lib/api-services/index.ts"
+      ],
+      "@flight-assistant-workspace/flight-assistant-services/services": [
+        "libs/flight-assistant-services/src/lib/services/index.ts"
+      ],
       "@flight-assistant-workspace/flight-assistant-ui": ["libs/flight-assistant-ui/src/index.ts"],
       "@flight-assistant-workspace/flight-assistant-ui/layouts": ["libs/flight-assistant-ui/src/lib/layouts/index.ts"]
     }

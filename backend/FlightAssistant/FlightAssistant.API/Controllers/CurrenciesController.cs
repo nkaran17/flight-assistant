@@ -18,7 +18,14 @@ namespace FlightAssistant.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            await _currencyService.FetchCurrencies();
+            var currencies = await _currencyService.GetAll();
+            return Ok(currencies);
+        }
+
+        [HttpGet("load")]
+        public async Task<IActionResult> LoadAll()
+        {
+            await _currencyService.LoadCurrencies();
             return Ok();
         }
     }

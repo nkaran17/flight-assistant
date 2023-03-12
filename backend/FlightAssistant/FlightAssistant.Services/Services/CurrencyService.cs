@@ -27,7 +27,7 @@ namespace FlightAssistant.Services.Services
             return null;
         }
 
-        public async Task FetchCurrencies()
+        public async Task LoadCurrencies()
         {
             var currencies = await _unitOfWork.Currencies.LoadCurrenciesFromFile();
 
@@ -38,6 +38,16 @@ namespace FlightAssistant.Services.Services
             }
 
             return;
+        }
+
+        public async Task<List<Currency>> GetAll() 
+        {
+            var currencies = await _unitOfWork.Currencies.GetAllAsync();
+            if(currencies != null)
+            {
+                return currencies.ToList();
+            }
+            return null;
         }
     }
 }

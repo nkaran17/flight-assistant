@@ -11,6 +11,7 @@ namespace FlightAssistant.Core.Services
     {
         Task<Currency> Create(Currency newCurrency);
         Task<string> GetCurrencyAlphabeticCodeById(int currencyId);
-        Task FetchCurrencies();
+        Task LoadCurrencies();
+        Task<List<Currency>> GetAll();
     }
 }
