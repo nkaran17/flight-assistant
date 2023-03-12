@@ -15,15 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@flight-assistant-workspace/flight-assistant-core": [
-        "libs/flight-assistant-core/src/index.ts"
-      ],
-      "@flight-assistant-workspace/flight-assistant-services": [
-        "libs/flight-assistant-services/src/index.ts"
-      ],
-      "@flight-assistant-workspace/flight-assistant-ui": [
-        "libs/flight-assistant-ui/src/index.ts"
-      ]
+      "@flight-assistant-workspace/flight-assistant-core": ["libs/flight-assistant-core/src/index.ts"],
+      "@flight-assistant-workspace/flight-assistant-services": ["libs/flight-assistant-services/src/index.ts"],
+      "@flight-assistant-workspace/flight-assistant-ui": ["libs/flight-assistant-ui/src/index.ts"],
+      "@flight-assistant-workspace/flight-assistant-ui/layouts": ["libs/flight-assistant-ui/src/lib/layouts/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
