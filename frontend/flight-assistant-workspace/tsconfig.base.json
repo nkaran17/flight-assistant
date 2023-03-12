@@ -25,8 +25,11 @@
       "@flight-assistant-workspace/flight-assistant-core/foundation": [
         "libs/flight-assistant-core/src/lib/foundation/index.ts"
       ],
+      "@flight-assistant-workspace/flight-assistant-core/helpers": [
+        "libs/flight-assistant-core/src/lib/helpers/index.ts"
+      ],
       "@flight-assistant-workspace/flight-assistant-services": ["libs/flight-assistant-services/src/index.ts"],
-      "@flight-assistant-workspace/flight-assistant-services/api/services": [
+      "@flight-assistant-workspace/flight-assistant-services/api-services": [
         "libs/flight-assistant-services/src/lib/api-services/index.ts"
       ],
       "@flight-assistant-workspace/flight-assistant-services/services": [

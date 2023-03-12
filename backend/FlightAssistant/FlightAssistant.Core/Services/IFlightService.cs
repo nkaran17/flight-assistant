@@ -6,8 +6,8 @@ namespace FlightAssistant.Core.Services
 {
     public interface IFlightService
     {
-        Task<QueryResult<Flight>> GetFlights(AmadeusFlightsRequest query);
+        Task<QueryResult<FlightResponse>> GetFlights(AmadeusFlightsRequest query);
         Task<Flight> Create(Flight newFlight);
-        Task<QueryResult<Flight>> AddAmadeusFliights(AmadeusFlightsRequest query, List<FlightOffer> flightOffers);
+        Task<QueryResult<FlightResponse>> AddAmadeusFliights(AmadeusFlightsRequest query, List<FlightOffer> flightOffers);
     }
 }

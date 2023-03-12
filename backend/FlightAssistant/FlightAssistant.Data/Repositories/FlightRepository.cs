@@ -1,5 +1,4 @@
 ﻿using FlightAssistant.Core.DTO;
-using FlightAssistant.Core.Helpers;
 using FlightAssistant.Core.Models;
 using FlightAssistant.Core.Models.Queries;
 using FlightAssistant.Core.Repositories;
@@ -11,14 +10,11 @@ namespace FlightAssistant.Data.Repositories
     {
         public FlightRepository(AppDbContext context) : base(context) { }
 
-        public async Task<QueryResult<Flight>> QueryFlightsAsync(AmadeusFlightsRequest query)
+        public async Task<QueryResult<FlightResponse>> QueryFlightsAsync(AmadeusFlightsRequest query)
         {
             var queryable = _entities.AsQueryable();
-            queryable = queryable.Include(x => x.DepartureAirport);
-            queryable = queryable.Include(x => x.ArrivalAirport);
-            queryable = queryable.Include(x => x.Currency);
 
-            QueryResult<Flight> queryResult = new QueryResult<Flight>();
+            QueryResult<FlightResponse> queryResult = new QueryResult<FlightResponse>();
 
             if (query != null)
             {
@@ -41,9 +37,14 @@ namespace FlightAssistant.Data.Repositories
             }
 
             queryResult.TotalItems = await queryable.CountAsync();
-            queryResult.Items = await queryable.Skip((query.Page - 1) * query.ItemsPerPage)
+
+            var flightsQuery = await queryable.Skip((query.Page - 1) * query.ItemsPerPage)
                                                     .Take(query.ItemsPerPage)
                                                     .ToListAsync();
+
+            var flightsResponseItems = flightsQuery.Select(f => new FlightResponse(f.Id, f.DepartureAirportId, f.ArrivalAirportId, f.DepartureDate, f.ArrivalDate, f.ReturnDate, f.NumberOfPassangers, f.NumberOfLayovers, f.CurrencyId, f.GrandTotalPrice)).ToList();
+
+            queryResult.Items = flightsResponseItems;
 
             return queryResult;
         }

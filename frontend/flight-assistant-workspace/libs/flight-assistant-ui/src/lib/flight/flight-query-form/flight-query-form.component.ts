@@ -38,6 +38,8 @@ export class FlightQueryFormComponent extends ComponentBase {
       return;
     }
     this.querySubmit.emit({
+      page: 1,
+      itemsPerPage: 10,
       departureAirportId: this.flightQueryForm.value.departureAirportId,
       arrivalAirportId: this.flightQueryForm.value.arrivalAirportId,
       departureDate: this.flightQueryForm.value.departureDate,

@@ -6,6 +6,6 @@ namespace FlightAssistant.Core.Repositories
 {
     public interface IFlightRepository : IGenericRepository<Flight>
     {
-        Task<QueryResult<Flight>> QueryFlightsAsync(AmadeusFlightsRequest query);
+        Task<QueryResult<FlightResponse>> QueryFlightsAsync(AmadeusFlightsRequest query);
     }
 }

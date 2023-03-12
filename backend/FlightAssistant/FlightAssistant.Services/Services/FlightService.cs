@@ -17,7 +17,7 @@ namespace FlightAssistant.Services.Services
             _amadeusApiService = amadeusApiService;
         }
 
-        public async Task<QueryResult<Flight>> GetFlights(AmadeusFlightsRequest query)
+        public async Task<QueryResult<FlightResponse>> GetFlights(AmadeusFlightsRequest query)
         {
             var flightsFromDb = await _unitOfWork.Flights.QueryFlightsAsync(query);
             if (flightsFromDb != null && flightsFromDb.TotalItems > 0)
@@ -36,9 +36,9 @@ namespace FlightAssistant.Services.Services
             return newFlight;
         }
 
-        public async Task<QueryResult<Flight>> AddAmadeusFliights(AmadeusFlightsRequest query, List<FlightOffer> flightOffers)
+        public async Task<QueryResult<FlightResponse>> AddAmadeusFliights(AmadeusFlightsRequest query, List<FlightOffer> flightOffers)
         {
-            QueryResult<Flight> queryResult = new QueryResult<Flight>();
+            QueryResult<FlightResponse> queryResult = new QueryResult<FlightResponse>();
 
             List<Flight> flightsToAdd = new List<Flight>();
 
@@ -63,8 +63,10 @@ namespace FlightAssistant.Services.Services
                 await _unitOfWork.Flights.AddRangeAsync(flightsToAdd);
                 await _unitOfWork.Complete();
 
-                queryResult.TotalItems = flightsToAdd.Count;
-                queryResult.Items = flightsToAdd.Take(Math.Min(10, flightsToAdd.Count)).ToList();
+                var flightsResponseItems = flightsToAdd.Select(f => new FlightResponse(f.Id, f.DepartureAirportId, f.ArrivalAirportId, f.DepartureDate, f.ArrivalDate, f.ReturnDate, f.NumberOfPassangers, f.NumberOfLayovers, f.CurrencyId, f.GrandTotalPrice)).ToList();
+
+                queryResult.TotalItems = flightsResponseItems.Count;
+                queryResult.Items = flightsResponseItems.Take(Math.Min(10, flightsResponseItems.Count)).ToList();
             }
 
             return queryResult;
