@@ -29,5 +29,8 @@ Flights can be filtered with following values:
  Airport codebook is populated before first usage from Wikipedia page provided in task using custom scrapper.
  
  Amadeus API auth_token is saved in cache for X (configurable in appsettings.json, I set it to 29 because token duration is 30) minutes. After it is removed from cache new access_token is retrieved and stored in cache again.  
+ 
+ TODO
+ - Add logging
 
 ![image](https://user-images.githubusercontent.com/36966269/224567795-bd4cbf74-6e19-4209-b800-24529e846b87.png)
