@@ -41,4 +41,12 @@ export class CoodebookService extends ServiceBase {
       this.isCodebookLoadInProgressSubject.next(false);
     }
   }
+
+  public getCurrencyById(id: number): Currency {
+    return this.currenciesSubject.value?.find((c) => c.id === id);
+  }
+
+  public getAirportById(id: number): Airport {
+    return this.airportsSubject.value?.find((a) => a.id === id);
+  }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComponentBase } from '@flight-assistant-workspace/flight-assistant-core/foundation';
 import { FlightQuery } from '@flight-assistant-workspace/flight-assistant-core/models';
+import { CustomAirportFormatEnum, CustomCurrencyFormatEnum, CustomDateFormatEnum } from '../../pipes';
 import { FlightListUiService } from './flight-list-ui.service';
 
 @Component({
@@ -10,6 +11,10 @@ import { FlightListUiService } from './flight-list-ui.service';
   styleUrls: ['./flight-list.component.scss'],
 })
 export class FlightListComponent extends ComponentBase {
+  customCurrencyFormatEnum = CustomCurrencyFormatEnum;
+  customAirportFormatEnum = CustomAirportFormatEnum;
+  customDateFormatEnum = CustomDateFormatEnum;
+
   public flightList$ = this.uiService.flightList$;
   public flightListQuery$ = this.uiService.flightListQuery$;
   public isLoading$ = this.uiService.isLoading$;

@@ -36,7 +36,8 @@
         "libs/flight-assistant-services/src/lib/services/index.ts"
       ],
       "@flight-assistant-workspace/flight-assistant-ui": ["libs/flight-assistant-ui/src/index.ts"],
-      "@flight-assistant-workspace/flight-assistant-ui/layouts": ["libs/flight-assistant-ui/src/lib/layouts/index.ts"]
+      "@flight-assistant-workspace/flight-assistant-ui/layouts": ["libs/flight-assistant-ui/src/lib/layouts/index.ts"],
+      "@flight-assistant-workspace/flight-assistant-ui/pipes": ["libs/flight-assistant-ui/src/lib/pipes/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

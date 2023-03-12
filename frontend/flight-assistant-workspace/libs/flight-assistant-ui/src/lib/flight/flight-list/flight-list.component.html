@@ -1,3 +1,33 @@
 <flight-assistant-workspace-flight-query-form
   (querySubmit)="onQuerySubmit($event)"
 ></flight-assistant-workspace-flight-query-form>
+<div class="my-3">
+  <p-table [value]="flightList$ | async" [loading]="isLoading$ | async" styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+        <th>Departure Date</th>
+        <th>Arrival Date</th>
+        <th>Return Date</th>
+        <th>Num. of Passangers</th>
+        <th>Num. of Layovers</th>
+        <th>Grand Total</th>
+        <th>Currency</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-flight>
+      <tr>
+        <td>{{ flight.departureAirportId | customAirport : customAirportFormatEnum.Iata | uppercase }}</td>
+        <td>{{ flight.arrivalAirportId | customAirport : customAirportFormatEnum.Iata | uppercase }}</td>
+        <td>{{ flight.departureDate | customDate : customDateFormatEnum.CustomDateTimeFormat }}</td>
+        <td>{{ flight.arrivalDate | customDate : customDateFormatEnum.CustomDateTimeFormat }}</td>
+        <td>{{ flight.returnDate | customDate : customDateFormatEnum.CustomDateFormat }}</td>
+        <td>{{ flight.numberOfPassangers }}</td>
+        <td>{{ flight.numberOfLayovers }}</td>
+        <td>{{ flight.grandTotalPrice }}</td>
+        <td>{{ flight.currencyId | customCurrency : customCurrencyFormatEnum.AlphabeticCode | uppercase }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

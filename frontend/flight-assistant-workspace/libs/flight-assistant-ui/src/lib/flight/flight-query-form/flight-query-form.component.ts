@@ -19,7 +19,7 @@ export class FlightQueryFormComponent extends ComponentBase {
     departureDate: [null, [Validators.required]],
     returnDate: [null],
     numberOfPassangers: [null, [Validators.required]],
-    currencyId: [null],
+    currencyId: [null, [Validators.required]],
   });
 
   airports$ = this.codebookService.airports$;

@@ -40,33 +40,36 @@ namespace FlightAssistant.Services.Services
         {
             QueryResult<FlightResponse> queryResult = new QueryResult<FlightResponse>();
 
-            List<Flight> flightsToAdd = new List<Flight>();
-
-            foreach (var flightOffer in flightOffers)
+            if (flightOffers != null)
             {
-                flightsToAdd.Add(new Flight
+                List<Flight> flightsToAdd = new List<Flight>();
+
+                foreach (var flightOffer in flightOffers)
                 {
-                    DepartureAirportId = query.DepartureAirportId,
-                    ArrivalAirportId = query.ArrivalAirportId,
-                    DepartureDate = GetDepartureTimeFromFlightOffer(flightOffer, query.DepartureDate),
-                    ArrivalDate = GetArrivalTimeFromFlightOffer(flightOffer),
-                    ReturnDate = query.ReturnDate,
-                    CurrencyId = query.CurrencyId > 0 ? query.CurrencyId : null,
-                    NumberOfLayovers = GetNumberOfLayoversFromFlightOffer(flightOffer),
-                    NumberOfPassangers = query.NumberOfPassangers,
-                    GrandTotalPrice = GetGrandTotalPriceFromFlightOffer(flightOffer)
-                });
-            }
+                    flightsToAdd.Add(new Flight
+                    {
+                        DepartureAirportId = query.DepartureAirportId,
+                        ArrivalAirportId = query.ArrivalAirportId,
+                        DepartureDate = GetDepartureTimeFromFlightOffer(flightOffer, query.DepartureDate),
+                        ArrivalDate = GetArrivalTimeFromFlightOffer(flightOffer),
+                        ReturnDate = query.ReturnDate,
+                        CurrencyId = query.CurrencyId > 0 ? query.CurrencyId : null,
+                        NumberOfLayovers = GetNumberOfLayoversFromFlightOffer(flightOffer),
+                        NumberOfPassangers = query.NumberOfPassangers,
+                        GrandTotalPrice = GetGrandTotalPriceFromFlightOffer(flightOffer)
+                    });
+                }
 
-            if (flightsToAdd.Count > 0)
-            {
-                await _unitOfWork.Flights.AddRangeAsync(flightsToAdd);
-                await _unitOfWork.Complete();
+                if (flightsToAdd.Count > 0)
+                {
+                    await _unitOfWork.Flights.AddRangeAsync(flightsToAdd);
+                    await _unitOfWork.Complete();
 
-                var flightsResponseItems = flightsToAdd.Select(f => new FlightResponse(f.Id, f.DepartureAirportId, f.ArrivalAirportId, f.DepartureDate, f.ArrivalDate, f.ReturnDate, f.NumberOfPassangers, f.NumberOfLayovers, f.CurrencyId, f.GrandTotalPrice)).ToList();
+                    var flightsResponseItems = flightsToAdd.Select(f => new FlightResponse(f.Id, f.DepartureAirportId, f.ArrivalAirportId, f.DepartureDate, f.ArrivalDate, f.ReturnDate, f.NumberOfPassangers, f.NumberOfLayovers, f.CurrencyId, f.GrandTotalPrice)).ToList();
 
-                queryResult.TotalItems = flightsResponseItems.Count;
-                queryResult.Items = flightsResponseItems.Take(Math.Min(10, flightsResponseItems.Count)).ToList();
+                    queryResult.TotalItems = flightsResponseItems.Count;
+                    queryResult.Items = flightsResponseItems.Take(Math.Min(10, flightsResponseItems.Count)).ToList();
+                }
             }
 
             return queryResult;
