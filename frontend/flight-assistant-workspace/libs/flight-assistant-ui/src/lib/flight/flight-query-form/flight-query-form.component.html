@@ -1,1 +1,102 @@
-<h3>Select flights query options</h3>
+<p-card>
+  <ng-template pTemplate="header">
+    <h3 class="p-2 m-0">Flight query form</h3>
+  </ng-template>
+  <form [formGroup]="flightQueryForm">
+    <div class="formgrid grid">
+      <div class="field col-12 md:col-3">
+        <label for="departure-airport">Departure Airport</label>
+        <p-dropdown
+          [options]="airports$ | async"
+          appendTo="body"
+          [style]="{ width: '100%' }"
+          optionLabel="name"
+          optionValue="id"
+          id="departure-airport"
+          placeholder="Departure Airport"
+          formControlName="departureAirportId"
+          [filter]="true"
+          filterBy="location"
+        ></p-dropdown>
+      </div>
+      <div class="field col-12 md:col-3">
+        <label for="arrival-airport">Arrival Airport</label>
+        <p-dropdown
+          [options]="airports$ | async"
+          appendTo="body"
+          [style]="{ width: '100%' }"
+          optionLabel="name"
+          optionValue="id"
+          id="arrival-airport"
+          placeholder="Arrival Airport"
+          formControlName="arrivalAirportId"
+          [filter]="true"
+          filterBy="location"
+        ></p-dropdown>
+      </div>
+      <div class="field col-12 md:col-3">
+        <label for="departure-date">Departure Date</label>
+        <p-calendar
+          styleClass="w-full"
+          id="departure-date"
+          [showIcon]="true"
+          formControlName="departureDate"
+          placeholder="Departure Date"
+        ></p-calendar>
+      </div>
+      <div class="field col-12 md:col-3">
+        <label for="return-date">Return Date</label>
+        <p-calendar
+          styleClass="w-full"
+          id="return-date"
+          [showIcon]="true"
+          formControlName="returnDate"
+          placeholder="Return Date"
+        ></p-calendar>
+      </div>
+      <div class="field col-12 md:col-3">
+        <label for="currency">Currency</label>
+        <p-dropdown
+          [options]="currencies$ | async"
+          appendTo="body"
+          [style]="{ width: '100%' }"
+          optionLabel="alphabeticCode"
+          optionValue="id"
+          id="currency"
+          placeholder="Currency"
+          formControlName="currencyId"
+          [filter]="true"
+          filterBy="alphabeticCode"
+        ></p-dropdown>
+      </div>
+      <div class="field col-12 md:col-3">
+        <label for="number-of-passangers">Number of Passangers</label>
+        <p-inputNumber
+          styleClass="w-full"
+          formControlName="numberOfPassangers"
+          placeholder="Number of Passangers"
+          id="number-of-passangers"
+        ></p-inputNumber>
+      </div>
+      <div class="field col-12 md:col-2">
+        <button
+          pButton
+          type="button"
+          label="Reset"
+          class="p-button-outlined w-full action-button"
+          (click)="onReset()"
+        ></button>
+      </div>
+      <div class="field col-12 md:col-2">
+        <button
+          pButton
+          type="submit"
+          label="Search"
+          class="w-full action-button"
+          [disabled]="flightQueryForm.invalid"
+          (click)="onSubmit()"
+        ></button>
+      </div>
+    </div>
+  </form>
+</p-card>
