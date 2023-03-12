@@ -14,6 +14,11 @@
     [loading]="isLoading$ | async"
     (onPage)="paginatorChange($event)"
   >
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <th colspan="9"><h3>Table content is empty.</h3></th>
+      </tr>
+    </ng-template>
     <ng-template pTemplate="header">
       <tr>
         <th>Departure Airport</th>
