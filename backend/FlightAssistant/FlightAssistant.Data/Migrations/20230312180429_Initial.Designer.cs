@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlightAssistant.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230312174442_Initial")]
+    [Migration("20230312180429_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -91,8 +91,7 @@ namespace FlightAssistant.Data.Migrations
                     b.Property<int>("ArrivalAirportId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ArrivalDate")
-                        .IsRequired()
+                    b.Property<DateTime>("ArrivalDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CurrencyId")
@@ -114,7 +113,7 @@ namespace FlightAssistant.Data.Migrations
                     b.Property<int>("NumberOfPassangers")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ReturnDate")
+                    b.Property<DateTime>("ReturnDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

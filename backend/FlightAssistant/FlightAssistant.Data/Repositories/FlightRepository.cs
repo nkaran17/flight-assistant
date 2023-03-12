@@ -18,30 +18,12 @@ namespace FlightAssistant.Data.Repositories
 
             if (query != null)
             {
-                if (query.DepartureAirportId > 0)
-                {
-                    queryable = queryable.Where(x => x.DepartureAirportId == query.DepartureAirportId);
-                }
-                if (query.ArrivalAirportId > 0)
-                {
-                    queryable = queryable.Where(x => x.ArrivalAirportId == query.ArrivalAirportId);
-                }
-                if (query.DepartureDate != null)
-                {
-                    queryable = queryable.Where(x => x.DepartureDate.Date == query.DepartureDate.Date);
-                }
-                if (query.ReturnDate != null)
-                {
-                    queryable = queryable.Where(x => x.ReturnDate.Value.Date == query.ReturnDate.Value.Date);
-                }
-                if (query.CurrencyId > 0)
-                {
-                    queryable = queryable.Where(x => x.CurrencyId == query.CurrencyId);
-                }
-                if (query.NumberOfPassangers > 0)
-                {
-                    queryable = queryable.Where(x => x.NumberOfPassangers == query.NumberOfPassangers);
-                }
+                queryable = queryable.Where(x => x.DepartureAirportId == query.DepartureAirportId);
+                queryable = queryable.Where(x => x.ArrivalAirportId == query.ArrivalAirportId);
+                queryable = queryable.Where(x => x.DepartureDate.Date == query.DepartureDate.Date);
+                queryable = queryable.Where(x => x.CurrencyId == query.CurrencyId);
+                queryable = queryable.Where(x => x.NumberOfPassangers == query.NumberOfPassangers);
+                queryable = queryable.Where(x => x.ReturnDate.Date == query.ReturnDate.Date);
             }
 
             queryResult.TotalItems = await queryable.CountAsync();

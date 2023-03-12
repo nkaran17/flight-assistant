@@ -81,7 +81,7 @@ namespace FlightAssistant.Services.Services
             }
 
             var returnDate = DateTimeHelper.DateOnly(request.ReturnDate);
-            if (returnDate != null)
+            if (returnDate != null && returnDate != DateTimeHelper.DateOnly(DateTime.MinValue))
             {
                 queryParams.Add("returnDate", returnDate);
             }

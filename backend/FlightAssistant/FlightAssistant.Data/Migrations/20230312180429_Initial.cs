@@ -51,7 +51,7 @@ namespace FlightAssistant.Data.Migrations
                     ArrivalAirportId = table.Column<int>(type: "int", nullable: false),
                     DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NumberOfPassangers = table.Column<int>(type: "int", nullable: false),
                     NumberOfLayovers = table.Column<int>(type: "int", nullable: false),
                     CurrencyId = table.Column<int>(type: "int", nullable: false),

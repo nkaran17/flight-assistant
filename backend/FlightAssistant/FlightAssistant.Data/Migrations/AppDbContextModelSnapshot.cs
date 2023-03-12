@@ -88,8 +88,7 @@ namespace FlightAssistant.Data.Migrations
                     b.Property<int>("ArrivalAirportId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ArrivalDate")
-                        .IsRequired()
+                    b.Property<DateTime>("ArrivalDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CurrencyId")
@@ -111,7 +110,7 @@ namespace FlightAssistant.Data.Migrations
                     b.Property<int>("NumberOfPassangers")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ReturnDate")
+                    b.Property<DateTime>("ReturnDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
