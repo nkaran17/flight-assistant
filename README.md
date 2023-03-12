@@ -32,5 +32,6 @@ Flights can be filtered with following values:
  
  TODO
  - Add logging
+ - Add and implement DTO mappings with Auto Mapper
 
 ![image](https://user-images.githubusercontent.com/36966269/224567795-bd4cbf74-6e19-4209-b800-24529e846b87.png)
